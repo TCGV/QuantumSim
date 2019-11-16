@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tcgv.QuantumSim", "Tcgv.QuantumSim.csproj", "{EB5E4A00-E09A-47C7-9E37-6A1A35F25575}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tcgv.QuantumSim.UnitTest", "..\Tcgv.QuantumSim.UnitTest\Tcgv.QuantumSim.UnitTest.csproj", "{15B6D8D4-5BCA-4671-844D-83BB2E5DED25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB5E4A00-E09A-47C7-9E37-6A1A35F25575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB5E4A00-E09A-47C7-9E37-6A1A35F25575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB5E4A00-E09A-47C7-9E37-6A1A35F25575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB5E4A00-E09A-47C7-9E37-6A1A35F25575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15B6D8D4-5BCA-4671-844D-83BB2E5DED25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B6D8D4-5BCA-4671-844D-83BB2E5DED25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B6D8D4-5BCA-4671-844D-83BB2E5DED25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B6D8D4-5BCA-4671-844D-83BB2E5DED25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E96A894F-1568-4922-8D12-877B20C66928}
+	EndGlobalSection
+EndGlobal
