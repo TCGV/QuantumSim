@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Tcgv.QuantumSim.Utility;
+﻿using System.Collections.Generic;
 
 namespace Tcgv.QuantumSim.Data
 {
@@ -7,44 +6,57 @@ namespace Tcgv.QuantumSim.Data
     {
         public Qubit(bool b)
         {
-            SetVec(
-                 new Quvec(new QPoint(b)),
-                 0
-            );
+            Id = (++counter);
+            SetV(new Quvec(new CPoint(b), Id));
         }
 
+        public int Id { get; private set; }
         public Quvec V { get; private set; }
 
-        internal void SetVec(Quvec v, int pos)
+        public static void Combine(Qubit q1, Qubit q2)
         {
-            V = v;
-            this.pos = pos;
+            var v1 = q1.V;
+            var v2 = q2.V;
+            if (v1 != v2)
+            {
+                var v = Quvec.Combine(v1, v2);
+                UpdateCache(v1, v);
+                UpdateCache(v2, v);
+            }
         }
 
-        public void MultiplyBy(Complex[,] matrix)
+        public CPoint Peek()
         {
-            var l = V.GetLength();
-            if (l > matrix.GetLength(0))
-            {
-                if (pos > 0)
-                    matrix = AlgebraUtility.TensorProduct(
-                            AlgebraUtility.Identity(pos * 2), matrix
-                        );
-                if (pos + 1 < l / 2)
-                    matrix = AlgebraUtility.TensorProduct(
-                            matrix, AlgebraUtility.Identity((l / 2 - pos - 1) * 2)
-                        );
-            }
-            V.MultiplyBy(matrix);
+            return V.Peek(Id);
         }
 
         public bool Measure()
         {
-            return V.Measure(pos);
+            return V.Measure(Id);
         }
 
-        private int pos;
+        private void SetV(Quvec v)
+        {
+            V = v;
+            AddToCache();
+        }
 
+        private void AddToCache()
+        {
+            if (!cache.ContainsKey(V))
+                cache.Add(V, new List<Qubit>());
+            cache[V].Add(this);
+        }
+
+        private static void UpdateCache(Quvec old, Quvec @new)
+        {
+            foreach (var bit in cache[old])
+                bit.SetV(@new);
+            cache.Remove(old);
+        }
+
+        private static Dictionary<Quvec, List<Qubit>> cache =
+            new Dictionary<Quvec, List<Qubit>>();
         private static int counter = 0;
     }
 }

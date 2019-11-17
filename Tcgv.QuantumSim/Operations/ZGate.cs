@@ -3,17 +3,17 @@ using Tcgv.QuantumSim.Data;
 
 namespace Tcgv.QuantumSim.Operations
 {
-    public class XGate : UnaryOperation
+    public class ZGate : UnaryOperation
     {
         public override void Apply(Qubit q)
         {
-            q.V.MultiplyBy(x_matrix, q.Id);
+            q.V.MultiplyBy(z_matrix, q.Id);
         }
 
-        private readonly Complex[,] x_matrix = new Complex[,]
+        private readonly Complex[,] z_matrix = new Complex[,]
         {
-            { 0, 1 },
-            { 1, 0 }
+            { 1, 0 },
+            { 0, -1 }
         };
     }
 }

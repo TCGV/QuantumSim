@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Tcgv.QuantumSim.Data;
@@ -22,6 +23,9 @@ namespace Tcgv.QuantumSim.Utility
 
         public static Complex[] Multiply(Complex[,] matrix, Complex[] vector)
         {
+            if (matrix.GetLength(0) != vector.Length)
+                throw new InvalidOperationException();
+
             var r = new Complex[vector.Length];
 
             for (int i = 0; i < matrix.GetLength(0); i++)
@@ -43,7 +47,7 @@ namespace Tcgv.QuantumSim.Utility
             {
                 for (int j = 0; j < v2.Length; j++)
                 {
-                    v[i * v1.Length + j] = v1[i] * v2[j];
+                    v[i * v2.Length + j] = v1[i] * v2[j];
                 }
             }
 
@@ -64,7 +68,7 @@ namespace Tcgv.QuantumSim.Utility
                     {
                         for (int l = 0; l < v2.GetLength(1); l++)
                         {
-                            v[i * v1.GetLength(0) + k, j * v1.GetLength(1) + l] =
+                            v[i * v2.GetLength(0) + k, j * v2.GetLength(1) + l] =
                                 v1[i, j] * v2[k, l];
                         }
                     }
@@ -74,12 +78,12 @@ namespace Tcgv.QuantumSim.Utility
             return v;
         }
 
-        public static Complex[] TensorProduct(QPoint[] points)
+        public static Complex[] TensorProduct(CPoint[] points)
         {
             return TensorProduct(points, 0).ToArray();
         }
 
-        private static IEnumerable<Complex> TensorProduct(QPoint[] points, int offset)
+        private static IEnumerable<Complex> TensorProduct(CPoint[] points, int offset)
         {
             if (offset < points.Length)
             {

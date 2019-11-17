@@ -8,7 +8,7 @@ namespace Tcgv.QuantumSim.Operations
     {
         public override void Apply(Qubit q)
         {
-            q.MultiplyBy(h_matrix);
+            q.V.MultiplyBy(h_matrix, q.Id);
         }
 
         private readonly Complex[,] h_matrix = new Complex[,]

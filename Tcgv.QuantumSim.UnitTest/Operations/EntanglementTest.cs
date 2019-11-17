@@ -21,6 +21,9 @@ namespace Tcgv.QuantumSim.Operations
                 new HGate().Apply(q1);
                 new CXGate().Apply(q1, q2);
 
+                Assert.IsNull(q1.Peek());
+                Assert.IsNull(q2.Peek());
+
                 diff += q1.Measure() ? 1 : -1;
                 if (q1.Measure() != q2.Measure())
                     Assert.Fail();
@@ -43,6 +46,9 @@ namespace Tcgv.QuantumSim.Operations
                 new HGate().Apply(q1);
                 new CXGate().Apply(q1, q2);
                 new XGate().Apply(q1);
+
+                Assert.IsNull(q1.Peek());
+                Assert.IsNull(q2.Peek());
 
                 diff += q1.Measure() ? 1 : -1;
                 if (q1.Measure() == q2.Measure())
