@@ -5,9 +5,9 @@ namespace Tcgv.QuantumSim.Operations
 {
     public class XGate : UnaryOperation
     {
-        public override void Apply(Qubit q)
+        protected override Complex[,] GetMatrix()
         {
-            q.V.MultiplyBy(x_matrix, q.Id);
+            return x_matrix;
         }
 
         private readonly Complex[,] x_matrix = new Complex[,]

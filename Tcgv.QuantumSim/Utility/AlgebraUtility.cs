@@ -8,6 +8,11 @@ namespace Tcgv.QuantumSim.Utility
 {
     public static class AlgebraUtility
     {
+        public static int Log2(int length)
+        {
+            return (int)Math.Round(Math.Log(length, 2));
+        }
+
         public static Complex[,] Identity(int l)
         {
             var m = new Complex[l, l];
@@ -19,6 +24,40 @@ namespace Tcgv.QuantumSim.Utility
                 }
             }
             return m;
+        }
+
+        public static Complex[] IntToVector(int bitLen, int value)
+        {
+            var v = new Complex[bitLen];
+            v[value] = Complex.One;
+            return v;
+        }
+
+        public static int VectorToInt(Complex[] vector)
+        {
+            for (int i = 0; i < vector.Length; i++)
+                if (vector[i] == Complex.One)
+                    return i;
+            throw new InvalidOperationException();
+        }
+
+        public static Complex[,] Sum(Complex[,] v1, Complex[,] v2)
+        {
+            if (v1.GetLength(0) != v2.GetLength(0) ||
+                v1.GetLength(1) != v2.GetLength(1))
+                throw new InvalidOperationException();
+
+            var r = new Complex[v1.GetLength(0), v1.GetLength(1)];
+
+            for (int i = 0; i < v1.GetLength(0); i++)
+            {
+                for (int j = 0; j < v1.GetLength(1); j++)
+                {
+                    r[i, j] = v1[i, j] + v2[i, j];
+                }
+            }
+
+            return r;
         }
 
         public static Complex[] Multiply(Complex[,] matrix, Complex[] vector)
