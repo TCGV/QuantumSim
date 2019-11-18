@@ -1,7 +1,7 @@
 # QuantumSim
-Simple quatum computing simulation implemented in .NET Core, for learning purposes.
+Simple quantum computing simulation implemented in .NET Core, for learning purposes.
 
-You can start at `Qubit.cs`, which provides the follwoing interface:
+You can start at `Qubit.cs`, which provides the following interface:
 
 ```C#
 public class Qubit
