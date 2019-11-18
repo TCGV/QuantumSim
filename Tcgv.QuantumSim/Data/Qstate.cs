@@ -20,15 +20,15 @@ namespace Tcgv.QuantumSim.Data
             v = new[] { p.X, p.Y };
         }
 
-        public static Qstate Combine(Qstate v1, Qstate v2)
+        public static Qstate Combine(Qstate s1, Qstate s2)
         {
-            var v = new Qstate();
-            v.v = AlgebraUtility.TensorProduct(v1.v, v2.v);
-            v.posMap = v2.posMap;
-            var offset = v2.posMap.Count;
-            foreach (var pair in v1.posMap)
-                v.posMap.Add(pair.Key, pair.Value + offset);
-            return v;
+            var s = new Qstate();
+            s.v = AlgebraUtility.TensorProduct(s1.v, s2.v);
+            s.posMap = s2.posMap;
+            var offset = s2.posMap.Count;
+            foreach (var pair in s1.posMap)
+                s.posMap.Add(pair.Key, pair.Value + offset);
+            return s;
         }
 
         public void MultiplyBy(UnaryOperation gate, int key)

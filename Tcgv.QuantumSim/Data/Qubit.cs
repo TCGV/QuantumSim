@@ -7,7 +7,7 @@ namespace Tcgv.QuantumSim.Data
         public Qubit(bool b)
         {
             Id = (++counter);
-            SetV(new Qstate(new CPoint(b), Id));
+            SetState(new Qstate(new CPoint(b), Id));
         }
 
         public int Id { get; private set; }
@@ -15,13 +15,13 @@ namespace Tcgv.QuantumSim.Data
 
         public static void Combine(Qubit q1, Qubit q2)
         {
-            var v1 = q1.S;
-            var v2 = q2.S;
-            if (v1 != v2)
+            var s1 = q1.S;
+            var s2 = q2.S;
+            if (s1 != s2)
             {
-                var v = Qstate.Combine(v1, v2);
-                UpdateCache(v1, v);
-                UpdateCache(v2, v);
+                var s = Qstate.Combine(s1, s2);
+                UpdateCache(s1, s);
+                UpdateCache(s2, s);
             }
         }
 
@@ -35,9 +35,9 @@ namespace Tcgv.QuantumSim.Data
             return S.Measure(Id);
         }
 
-        private void SetV(Qstate v)
+        private void SetState(Qstate s)
         {
-            S = v;
+            S = s;
             AddToCache();
         }
 
@@ -51,7 +51,7 @@ namespace Tcgv.QuantumSim.Data
         private static void UpdateCache(Qstate old, Qstate @new)
         {
             foreach (var bit in cache[old])
-                bit.SetV(@new);
+                bit.SetState(@new);
             cache.Remove(old);
         }
 
