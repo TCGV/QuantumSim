@@ -13,19 +13,6 @@ namespace Tcgv.QuantumSim.Utility
             return (int)Math.Round(Math.Log(length, 2));
         }
 
-        public static Complex[,] Identity(int l)
-        {
-            var m = new Complex[l, l];
-            for (int i = 0; i < l; i++)
-            {
-                for (int j = 0; j < l; j++)
-                {
-                    m[i, j] = i == j ? 1 : 0;
-                }
-            }
-            return m;
-        }
-
         public static Complex[] IntToVector(int bitLen, int value)
         {
             var v = new Complex[bitLen];
@@ -33,31 +20,29 @@ namespace Tcgv.QuantumSim.Utility
             return v;
         }
 
-        public static int VectorToInt(Complex[] vector)
+        public static IEnumerable<int> VectorToInt(Complex[] vector)
         {
             for (int i = 0; i < vector.Length; i++)
-                if (vector[i] == Complex.One)
-                    return i;
-            throw new InvalidOperationException();
+                if (vector[i] != Complex.Zero)
+                    yield return i;
         }
 
-        public static Complex[,] Sum(Complex[,] v1, Complex[,] v2)
+        public static Dictionary<int, Dictionary<int, Complex>> LookupTable(Complex[,] matrix)
         {
-            if (v1.GetLength(0) != v2.GetLength(0) ||
-                v1.GetLength(1) != v2.GetLength(1))
-                throw new InvalidOperationException();
-
-            var r = new Complex[v1.GetLength(0), v1.GetLength(1)];
-
-            for (int i = 0; i < v1.GetLength(0); i++)
+            var bitLen = matrix.GetLength(0);
+            var table = new Dictionary<int, Dictionary<int, Complex>>();
+            for (int i = 0; i < bitLen; i++)
             {
-                for (int j = 0; j < v1.GetLength(1); j++)
+                var vector = IntToVector(bitLen, i);
+                var result = Multiply(matrix, vector);
+
+                table.Add(i, new Dictionary<int, Complex>());
+                foreach (var j in VectorToInt(result))
                 {
-                    r[i, j] = v1[i, j] + v2[i, j];
+                    table[i].Add(j, result[j]);
                 }
             }
-
-            return r;
+            return table;
         }
 
         public static Complex[] Multiply(Complex[,] matrix, Complex[] vector)
@@ -87,30 +72,6 @@ namespace Tcgv.QuantumSim.Utility
                 for (int j = 0; j < v2.Length; j++)
                 {
                     v[i * v2.Length + j] = v1[i] * v2[j];
-                }
-            }
-
-            return v;
-        }
-
-        public static Complex[,] TensorProduct(Complex[,] v1, Complex[,] v2)
-        {
-            var w = v1.GetLength(0) * v2.GetLength(0);
-            var h = v1.GetLength(1) * v2.GetLength(1);
-            var v = new Complex[w, h];
-
-            for (int i = 0; i < v1.GetLength(0); i++)
-            {
-                for (int j = 0; j < v1.GetLength(1); j++)
-                {
-                    for (int k = 0; k < v2.GetLength(0); k++)
-                    {
-                        for (int l = 0; l < v2.GetLength(1); l++)
-                        {
-                            v[i * v2.GetLength(0) + k, j * v2.GetLength(1) + l] =
-                                v1[i, j] * v2[k, l];
-                        }
-                    }
                 }
             }
 

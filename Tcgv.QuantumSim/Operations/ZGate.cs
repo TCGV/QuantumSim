@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Tcgv.QuantumSim.Data;
 
 namespace Tcgv.QuantumSim.Operations
 {

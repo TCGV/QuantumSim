@@ -10,10 +10,10 @@ namespace Tcgv.QuantumSim.Operations
         public void Teleportation_FalseQubit_Test()
         {
             var sender = new Qubit(false);
-            var msg = new Qubit(false);
             var recv = new Qubit(false);
 
-            var b = Teleport(sender, msg, recv);
+            var b = Teleport(sender, recv, false);
+
             Assert.IsFalse(b);
         }
 
@@ -21,15 +21,17 @@ namespace Tcgv.QuantumSim.Operations
         public void Teleportation_TrueQubit_Test()
         {
             var sender = new Qubit(false);
-            var msg = new Qubit(true);
             var recv = new Qubit(false);
 
-            var b = Teleport(sender, msg, recv);
+            var b = Teleport(sender, recv, true);
+
             Assert.IsTrue(b);
         }
 
-        private static bool Teleport(Qubit sender, Qubit msg, Qubit recv)
+        private static bool Teleport(Qubit sender, Qubit recv, bool message)
         {
+            var msg = new Qubit(message);
+
             new HGate().Apply(sender);
             new CXGate().Apply(sender, recv);
 
@@ -39,13 +41,13 @@ namespace Tcgv.QuantumSim.Operations
             var bMsg = msg.Measure();
             var bSender = sender.Measure();
 
-            if (bMsg)
-                new XGate().Apply(recv);
             if (bSender)
+                new XGate().Apply(recv);
+            if (bMsg)
                 new ZGate().Apply(recv);
 
             var bRecv = recv.Measure();
-            if (bMsg != bRecv)
+            if (message != bRecv)
                 Assert.Fail();
 
             return bRecv;

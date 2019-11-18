@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tcgv.QuantumSim.Utility
+﻿namespace Tcgv.QuantumSim.Utility
 {
     public static class BinaryUtility
     {

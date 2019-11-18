@@ -1,28 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Tcgv.QuantumSim.Operations;
 using Tcgv.QuantumSim.Utility;
-using System;
 
 namespace Tcgv.QuantumSim.Data
 {
-    public class Quvec
+    public class Qstate
     {
-        Quvec()
+        Qstate()
         {
             posMap = new Dictionary<int, int>();
         }
 
-        public Quvec(CPoint p, int key) : this()
+        public Qstate(CPoint p, int key) : this()
         {
             posMap.Add(key, 0);
             v = new[] { p.X, p.Y };
         }
 
-        public static Quvec Combine(Quvec v1, Quvec v2)
+        public static Qstate Combine(Qstate v1, Qstate v2)
         {
-            var v = new Quvec();
+            var v = new Qstate();
             v.v = AlgebraUtility.TensorProduct(v1.v, v2.v);
             v.posMap = v2.posMap;
             var offset = v2.posMap.Count;
