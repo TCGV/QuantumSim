@@ -63,14 +63,14 @@ namespace Tcgv.QuantumSim.Data
         {
             int pos = posMap[key];
 
-            int val = Measure();
+            int val = Sample();
             bool m = BinaryUtility.HasBit(val, pos);
             Collapse(pos, m);
 
             return m;
         }
 
-        private int Measure()
+        private int Sample()
         {
             var i = 0;
             var aux = 0.0d;
